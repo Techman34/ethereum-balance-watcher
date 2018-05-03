@@ -18,8 +18,8 @@ export class Riot {
     }
 
     error(info) {
-        logger.error(info.toString());
-        this.client.sendTextMessage(this.room, "[BALANCE WATCHER]" + info.toString());
+        logger.error(info);
+        this.client.sendTextMessage(this.room, "[BALANCE WATCHER] " + info);
     }
 }
 

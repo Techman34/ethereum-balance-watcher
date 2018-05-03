@@ -2,6 +2,14 @@
 
 ## Usage
 
+Set RIOT env variables:
+
+```
+$ export RIOT_TOKEN=...
+$ export RIOT_ROOM=...
+$ export RIOT_USER=...
+```
+
 ```
 $ node build/index.js watch ./config.json
 ```

@@ -59,6 +59,7 @@
     "prettier-eslint-cli": "*"
   },
   "dependencies": {
+    "bignumber.js": "^6.0.0",
     "commander": "^2.15.1",
     "ethers": "^3.0.15",
     "inquirer": "^5.2.0",

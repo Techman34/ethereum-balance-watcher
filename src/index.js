@@ -7,7 +7,10 @@ import {ERC20} from './artifacts.js';
 import program from 'commander';
 import fs from 'fs';
 
+import Bignumber from 'bignumber.js';
 import logger, {Riot} from './logger';
+
+console.log(process.env)
 
 let riot = new Riot({
     token: process.env.RIOT_TOKEN,
@@ -38,36 +41,51 @@ function setupProvider(network) {
 
 async function getBalance(address, contract) {
     if (contract == undefined) {
-        return provider.getBalance(address)
+        let balance = provider.getBalance(address)
+        return new Bignumber(balance);
+
     } else {
-        return contract.balanceOf(address)
+        let balance = await contract.balanceOf(address);
+        balance = new Bignumber(balance.toString())
+        balance = balance.div(10 ** contract.decimals);
+
+        return balance
     }
 }
 
-async function watchBalance(address, conf) {
-    let {token, min, decimals=18} = conf;
+async function watchBalance(address, alias, conf) {
+    let {token, min, msg, decimals=18} = conf;
 
+    var asset = token != undefined ? token : 'ether';
     var contract = undefined;
     if (token != undefined) {
         contract = new ethers.Contract(token, ERC20, provider);
+        contract.decimals = decimals;
     }
 
-    updateFn = async () => {
+    min = new Bignumber(min);
+
+    alias = alias == undefined ? address : alias;
+    msg   = msg   == undefined ? ` balance is lower than min ${min}` : msg;
+
+    const updateFn = async () => {
         let balance = await getBalance(address, contract);
-
-        console.log("Balance:")
-        console.log(balance)
+        logger.info(`${address}: ${asset} ${balance} `)
+        
+        if (balance.lt(min)) {
+            riot.error(`${alias}: ${msg}`);
+        }
     };
-
+    
     updateFn();
     setInterval(async () => {
         updateFn();
     }, INTERVAL * SECONDS);
 }
 
-async function watchAddress(address, balances) {
-    for (const {token, min} of balances) {
-        watchBalance(address, token, min)
+async function watchAddress(address, alias, balances) {
+    for (const conf of balances) {
+        watchBalance(address, alias, conf)
     }
 }
 
@@ -77,8 +95,8 @@ program
         const {watch, network} = JSON.parse(fs.readFileSync(config).toString());
         setupProvider(network);
 
-        for (const conf of watch) {
-            watchAddress(address, conf)
+        for (const {address, alias, balance} of watch) {
+            watchAddress(address, alias, balance)
         }
     });
 

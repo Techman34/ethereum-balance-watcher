@@ -4,3 +4,5 @@ coverage/
 .env
 package-lock.json
 config.example.json
+*.log
+/pkg

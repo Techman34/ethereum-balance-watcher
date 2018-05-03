@@ -9,6 +9,7 @@
     "format": "prettier-eslint --write src/**/*.js",
     "flow": "flow",
     "lint": "eslint .",
+    "compile": "npm run build && rm -rf pkg && pkg -t linux,macos build/index.js --out-path ./pkg",
     "prepublish": "npm run build",
     "precommit": "lint-staged",
     "pretest": "npm run lint && npm run flow && npm run depcheck",

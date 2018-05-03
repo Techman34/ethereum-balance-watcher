@@ -10,8 +10,6 @@ import fs from 'fs';
 import Bignumber from 'bignumber.js';
 import logger, {Riot} from './logger';
 
-console.log(process.env)
-
 let riot = new Riot({
     token: process.env.RIOT_TOKEN,
     room: process.env.RIOT_ROOM,

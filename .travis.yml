@@ -6,6 +6,9 @@ services:
 env:
   - IMAGE=melonproject/ethereum-balance-watcher
 
+before_install:
+  - npm install -g pkg
+
 script:
   - npm run compile
   - echo $IMAGE

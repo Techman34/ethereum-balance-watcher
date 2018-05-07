@@ -1,0 +1,7 @@
+language: node_js
+
+services:
+  - docker
+
+script:
+  - sudo -E "PATH=$PATH" make travis

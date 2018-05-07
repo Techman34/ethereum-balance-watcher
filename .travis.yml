@@ -9,6 +9,6 @@ env:
 script:
   - npm run compile
   - echo $IMAGE
-  - docker build -t $(IMAGE) .
+  - docker build -t $IMAGE .
   - docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD
-  - docker push $(IMAGE)
+  - docker push $IMAGE

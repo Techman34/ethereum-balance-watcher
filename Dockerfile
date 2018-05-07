@@ -1,5 +1,5 @@
 FROM ubuntu
 
-COPY ./pkg/index-linux /home/app
+COPY ./pkg/index /home/app
 
 ENTRYPOINT /home/app

@@ -5,7 +5,7 @@
   "sign-git-tag": true,
   "scripts": {
     "build": "babel src/ -d build/",
-    "compile": "npm run build && rm -rf pkg && pkg -t linux,alpine build/index.js --out-path ./pkg",
+    "compile": "npm run build && rm -rf pkg && pkg -t linux build/index.js --out-path ./pkg",
     "docker": "docker build -t melonproject/ethereum-balance-watcher .",
     "travis": "bash scripts/travis.sh"
   },

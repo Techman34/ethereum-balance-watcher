@@ -5,7 +5,8 @@
   "sign-git-tag": true,
   "scripts": {
     "build": "babel src/ -d build/",
-    "compile": "npm run build && rm -rf pkg && pkg -t linux,macos build/index.js --out-path ./pkg"
+    "compile": "npm run build && rm -rf pkg && pkg -t linux,macos build/index.js --out-path ./pkg",
+    "test1": "bash scripts/travis.sh"
   },
   "repository": {
     "type": "git",

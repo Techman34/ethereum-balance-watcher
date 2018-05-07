@@ -4,4 +4,6 @@ services:
   - docker
 
 script:
+  - echo $PATH
   - sudo -E "PATH=$PATH" make travis
+  - npm run test1

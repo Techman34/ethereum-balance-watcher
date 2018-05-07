@@ -3,7 +3,11 @@ language: node_js
 services:
   - docker
 
+env:
+  - IMAGE=melonproject/ethereum-balance-watcher
+
 script:
-  - echo $PATH
-  - sudo -E "PATH=$PATH" make travis
-  - npm run test1
+  - npm run compile
+  - 'docker build -t $(IMAGE) .'
+  - 'docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD'
+  - 'docker push $(IMAGE)'
